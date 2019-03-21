@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div id="msg"></div>
+<input type="text" id="text">
+<input type="submit" value="send" onclick="send()">
+</body>
+<script>
+    var msg = document.getElementById("msg");
+    var wsServer = 'ws://127.0.0.1:80';
+    var websocket = new WebSocket(wsServer);
+    //监听连接打开
+    websocket.onopen = function (evt) {
+        msg.innerHTML = "成功进入聊天室";
+    };
+    //监听服务器数据推送
+    websocket.onmessage = function (evt) {
+        msg.innerHTML += "<br>" + evt.data;
+    };
+
+    //监听连接关闭
+    websocket.onclose = function (evt) {
+        alert("服务器已经停机");
+    };
+
+    function send() {
+        var text = document.getElementById("text").value
+        websocket.send(text);
+    }
+</script>
+</html>
