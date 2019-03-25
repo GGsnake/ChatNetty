@@ -1,5 +1,7 @@
 package com.webscoket.webscoket.controller;
 
+import com.webscoket.webscoket.service.RedisReceiver;
+import com.webscoket.webscoket.service.RedisService;
 import io.netty.handler.codec.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.yeauty.annotation.*;
@@ -13,7 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class MyWebSocket {
     private static Map<String, Session> livingSessions = new ConcurrentHashMap<>();
-
+    private RedisService redisService;
+    private RedisReceiver redisReceiver;
     @OnOpen
     public void onOpen(Session session, HttpHeaders headers) throws IOException {
         livingSessions.put(String.valueOf(session.id()), session);
@@ -33,7 +36,6 @@ public class MyWebSocket {
 
     @OnMessage
     public void OnMessage(Session session, String message) {
-        sendMessageToAll("用户ID="+session.id()+":"+message);
     }
 
     /**
@@ -42,8 +44,8 @@ public class MyWebSocket {
      * @param session
      * @param message
      */
-    public void sendMessage(Session session, String message) {
-        session.sendText(message);
+    public void sendMessage(String session, String message) {
+        redisService.sendChannelMess(session,message);
     }
 
     /**
@@ -53,7 +55,7 @@ public class MyWebSocket {
      */
     public void sendMessageToAll(String message) {
         livingSessions.forEach((sessionId, session) -> {
-            sendMessage(session, message);
+            sendMessage(session.id().toString(), message);
         });
     }
 }
