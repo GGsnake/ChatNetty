@@ -9,22 +9,64 @@ import org.springframework.stereotype.Component;
 import org.yeauty.annotation.*;
 import org.yeauty.pojo.Session;
 
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-@ServerEndpoint
-@Component
 @Log
+@ServerEndpoint("/websocket/{username}")
+@Component
 public class MyWebSocket {
+    /**
+     * 在线人数
+     */
+    public static int onlineNumber = 0;
+
+    /**
+     * 以用户的姓名为key，WebSocket为对象保存起来
+     */
+    private static Map<String, WebSocket> clients = new ConcurrentHashMap<String, WebSocket>();
+
     @Autowired
     private RabbitTemplate template;
     private static Map<String, Session> livingSessions = new ConcurrentHashMap<>();
+
+    /**
+     * 新用户建立连接的入口
+     * @param session
+     * @param headers
+     */
     @OnOpen
-    public void onOpen(Session session, HttpHeaders headers) {
-        livingSessions.put(String.valueOf(session.id()), session);
-        session.sendText("Hello" + session.id());
-        sendMessageToAll("Hello" + session.id() + "大家欢迎他");
+    public void onOpen(@PathParam("username") String username, Session session) {
+//        livingSessions.put(String.valueOf(session.id()), session);
+//        session.sendText("Hello" + session.id());
+//        sendMessageToAll("Hello" + session.id() + "大家欢迎他");
+        onlineNumber++;
+        logger.info("现在来连接的客户id："+session.getId()+"用户名："+username);
+        this.username = username;
+        this.session = session;
+        logger.info("有新连接加入！ 当前在线人数" + onlineNumber);
+        try {
+            //messageType 1代表上线 2代表下线 3代表在线名单 4代表普通消息
+            //先给所有人发送通知，说我上线了
+            Map<String,Object> map1 = Maps.newHashMap();
+            map1.put("messageType",1);
+            map1.put("username",username);
+            sendMessageAll(JSON.toJSONString(map1),username);
+
+            //把自己的信息加入到map当中去
+            clients.put(username, this);
+            //给自己发一条消息：告诉自己现在都有谁在线
+            Map<String,Object> map2 = Maps.newHashMap();
+            map2.put("messageType",3);
+            //移除掉自己
+            Set<String> set = clients.keySet();
+            map2.put("onlineUsers",set);
+            sendMessageTo(JSON.toJSONString(map2),username);
+        }
+        catch (IOException e){
+            logger.info(username+"上线的时候通知所有人发生了错误");
+        }
     }
 
     /**
