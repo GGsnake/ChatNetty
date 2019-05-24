@@ -23,7 +23,7 @@ package com.webscoket.webscoket.config;
  */
 public interface JwtConstants {
 
-    String AUTH_HEADER = "Authorization";
+    String AUTH_HEADER = "token";
 
     String SECRET = "defaultSecret";
 
