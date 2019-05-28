@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 
-@ServerEndpoint("/websocket/{sid}")
+@ServerEndpoint("/websocket")
 @Component
 @Log
 public class MyWebSocket {
