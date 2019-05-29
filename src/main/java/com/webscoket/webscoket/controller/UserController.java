@@ -1,17 +1,14 @@
 package com.webscoket.webscoket.controller;
 
 
-import com.webscoket.webscoket.UserService.UserService;
-import com.webscoket.webscoket.config.LoginRequired;
+import com.webscoket.webscoket.service.UserService;
 import com.webscoket.webscoket.dao.UserBindDao;
 import com.webscoket.webscoket.model.User;
-import com.webscoket.webscoket.service.MyWebSocket;
 import com.webscoket.webscoket.utils.JwtTokenUtil;
 import com.webscoket.webscoket.utils.WeikeResponse;
 import com.webscoket.webscoket.utils.WeikeResponseUtil;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,6 +46,14 @@ public class UserController {
         }
         List<User> users = userBindDao.selectUserByName(authToken);
         return WeikeResponseUtil.success(users);
+    }
+
+
+    @GetMapping("/register")
+    @ResponseBody
+    public WeikeResponse friendList(User user) {
+        userService.addUser(user);
+        return WeikeResponseUtil.success();
     }
 
 

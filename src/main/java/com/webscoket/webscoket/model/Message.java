@@ -1,18 +1,18 @@
 package com.webscoket.webscoket.model;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import java.util.Date;
-import java.util.List;
-
 /**
  *  message
  * @author GGsnake 2019-05-27
  */
 @Data
+@TableName("message")
 public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
-
     /**
      * id
      */
@@ -43,7 +43,6 @@ public class Message implements Serializable {
      */
     private Date status;
 
-    public Message() {
-    }
+
 
 }

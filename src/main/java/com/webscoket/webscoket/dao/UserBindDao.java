@@ -1,19 +1,18 @@
 package com.webscoket.webscoket.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.webscoket.webscoket.model.User;
 import com.webscoket.webscoket.model.UserBind;
-import org.beetl.sql.core.annotatoin.Param;
-import org.beetl.sql.core.annotatoin.SqlResource;
-import org.beetl.sql.core.engine.PageQuery;
-import org.beetl.sql.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-@SqlResource("user")
 public interface UserBindDao extends BaseMapper<UserBind> {
-    // JDK 1.8 可不加@Param  但java编译的时候开启-parameters选项
-    List<User> selectUserByName(@Param("id") String id);
-
-
-    void getUserListPageQuery(PageQuery query);
+    @Select(" select a.id,a.age,\n" +
+            "                    a.roleId,\n" +
+            "                     a.name,\n" +
+            "                 \n" +
+            "                     a.userName,\n" +
+            "                    a.signature from user  a inner join userbind  b on b.uid=#{uid} and a.id=b.pid ")
+    List<User> selectUserByName(String uid);
 }

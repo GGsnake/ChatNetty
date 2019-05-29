@@ -12,11 +12,27 @@
     <artifactId>webscoket</artifactId>
     <version>1.0.0</version>
     <name>webscoket</name>
-    <description>This is webscoket study project</description>
+    <description>This is webscokew zt study project</description>
 
     <properties>
-        <java.version>1.8</java.version>
         <jwt.version>0.9.0</jwt.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <shiro.version>1.3.2</shiro.version>
+        <shiro-redis.version>2.4.2.1-RELEASE</shiro-redis.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
+        <commons-codec.version>1.10</commons-codec.version>
+        <fileupload.version>1.3.1</fileupload.version>
+        <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
+        <mybatisplus.version>2.1.4</mybatisplus.version>
+        <fastjson.version>1.2.41</fastjson.version>
+        <jackson.version>2.9.3</jackson.version>
+        <druid.version>1.1.9</druid.version>
+        <guava.version>17.0</guava.version>
+        <quartz.version>2.3.0</quartz.version>
+        <skip>true</skip>
     </properties>
 
     <dependencies>
@@ -33,6 +49,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,23 +75,49 @@
             <version>${jwt.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.ibeetl</groupId>
-            <artifactId>beetlsql</artifactId>
-            <version>2.11.0</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${mybatisplus.version}</version>
         </dependency>
-       <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.16.6</version>
-    </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatisplus-spring-boot-starter</artifactId>
+            <version>${mybatisplus-spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${mybatisplus.version}</version>
         </dependency>
 
+
+
+
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
         </dependency>
         <!--junit测试-->
         <dependency>
@@ -88,11 +134,11 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.alibaba</groupId>-->
+        <!--<artifactId>druid-spring-boot-starter</artifactId>-->
+        <!--<version>1.1.10</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
