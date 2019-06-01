@@ -1,4 +1,4 @@
-package com.webscoket.webscoket.dto;
+package com.webscoket.webscoket.bean.dto;
 
 import com.webscoket.webscoket.model.User;
 import lombok.Data;

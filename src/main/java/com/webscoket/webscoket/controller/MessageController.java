@@ -1,7 +1,6 @@
 package com.webscoket.webscoket.controller;
 
-import com.webscoket.webscoket.dto.MessageDto;
-import com.webscoket.webscoket.model.Message;
+import com.webscoket.webscoket.bean.dto.MessageDto;
 import com.webscoket.webscoket.service.MessAgeService;
 import com.webscoket.webscoket.service.MyWebSocket;
 import com.webscoket.webscoket.utils.JwtTokenUtil;

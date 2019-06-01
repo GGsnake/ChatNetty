@@ -10,9 +10,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MybatisPlusConfig {
-
-
-
 	/***
 	 * plus 的性能优化
 	 * @return

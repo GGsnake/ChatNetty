@@ -5,7 +5,11 @@ spring:
   #连接池配置
   # 数据源配置
   datasource:
-
+#        url: jdbc:mysql://127.0.0.1:3306/oop?useUnicode=true&characterEncoding=utf8&useSSL=false&tinyInt1isBit=true
+    url: jdbc:mysql://47.100.187.103:3306/oop?useUnicode=true&characterEncoding=utf8&useSSL=false&tinyInt1isBit=true
+    username: root
+    #    username: root
+    password: gg5201314
   #    password: root
 #mybatisPlus
 mybatis:

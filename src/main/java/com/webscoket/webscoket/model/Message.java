@@ -2,6 +2,7 @@ package com.webscoket.webscoket.model;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import java.util.Date;
@@ -11,13 +12,12 @@ import java.util.Date;
  */
 @Data
 @TableName("message")
-public class Message implements Serializable {
+public class Message extends Model<Message> implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * id
      */
     private Integer id;
-
     /**
      * content
      */
@@ -44,5 +44,8 @@ public class Message implements Serializable {
     private Date status;
 
 
-
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 }

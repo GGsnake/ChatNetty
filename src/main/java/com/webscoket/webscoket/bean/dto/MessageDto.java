@@ -1,4 +1,4 @@
-package com.webscoket.webscoket.dto;
+package com.webscoket.webscoket.bean.dto;
 
 import com.webscoket.webscoket.model.Message;
 import lombok.Data;
@@ -12,5 +12,6 @@ import java.util.Date;
  */
 @Data
 public class MessageDto extends Message {
+
 
 }
