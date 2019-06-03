@@ -1,16 +1,21 @@
 package com.webscoket.webscoket.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.webscoket.webscoket.bean.dto.MessageDto;
+import com.webscoket.webscoket.model.Message;
 import com.webscoket.webscoket.service.MessAgeService;
 import com.webscoket.webscoket.service.MyWebSocket;
 import com.webscoket.webscoket.utils.JwtTokenUtil;
 import com.webscoket.webscoket.utils.WeikeResponse;
 import com.webscoket.webscoket.utils.WeikeResponseUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 
 @CrossOrigin("*")
 @RequestMapping("/Mes")
@@ -30,26 +35,32 @@ public class MessageController {
     }
 
     @GetMapping("/history")
-    public String history(Integer uid, String message) {
-        try {
-            MyWebSocket.sendInfo(message, String.valueOf(uid));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    @ResponseBody
+    public WeikeResponse history() {
+//        String myId = JwtTokenUtil.getUsernameFromToken(token);
+        String myId = "2";
+        Integer uid=1;
+        String[] arr={String.valueOf(uid),myId};
+        Page<Message> messagePage = messAgeService.selectPage(new Page<Message>(1, 10), new EntityWrapper<Message>().where("sid", arr).and().in("accid", arr));
+        return WeikeResponseUtil.success(messagePage);
     }
 
 
 
     /**
-     * 新增
+     * 发送消息给对方
+     * @param messageDto
+     * @return
      */
     @GetMapping("/save")
     @ResponseBody
     public WeikeResponse save(MessageDto messageDto,String token) {
-        String myuid = JwtTokenUtil.getUsernameFromToken(token);
-        messageDto.setSid(Integer.valueOf(myuid));
-        Boolean aBoolean = messAgeService.addMessage(messageDto);
+        String myId = JwtTokenUtil.getUsernameFromToken(token);
+        messageDto.setSid(Integer.valueOf(myId));
+        Message message=new Message();
+        message.setSendtime(new Date());
+        BeanUtils.copyProperties(messageDto,message);
+        Boolean aBoolean = messAgeService.insert(messageDto);
         try {
             MyWebSocket.sendForUser(messageDto.getContent(),messageDto.getAccid());
         } catch (IOException e) {
@@ -59,41 +70,4 @@ public class MessageController {
         return WeikeResponseUtil.success(aBoolean);
     }
 
-//    /**
-//     * 删除
-//     */
-//    @PostMapping("/delete")
-//    public Object delete(int id) {
-//        Message message = sqlManager.unique(Message.class, id);
-//        if (message != null) {
-//            sqlManager.deleteById(id);
-//            return ApiReturnUtil.success("删除成功");
-//        } else {
-//            return ApiReturnUtil.error("没有找到该对象");
-//        }
-//    }
-//
-//    /**
-//     * 查询
-//     */
-//    @PostMapping("/find")
-//    public Object find(int id) {
-//        Message message = sqlManager.unique(Message.class, id);
-//        if (message != null) {
-//            return ApiReturnUtil.success(message);
-//        } else {
-//            return ApiReturnUtil.error("没有找到该对象");
-//        }
-//    }
-//
-//    /**
-//     * 分页查询
-//     */
-//    @PostMapping("/list")
-//    public Object list(Message message,
-//                       @RequestParam(required = false, defaultValue = "0") int pageNumber,
-//                       @RequestParam(required = false, defaultValue = "10") int pageSize) {
-//        List<Message> list = sqlManager.query(Message.class).select();
-//        return ApiReturnUtil.success(list);
-//    }
 }
