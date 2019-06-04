@@ -28,6 +28,7 @@ public class User extends Model<User> {
     private Date lastTime;
     private String signature;
     private String password;
+    private String phone;
     @Override
     protected Serializable pkVal() {
         return this.id;

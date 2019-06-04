@@ -37,10 +37,10 @@ public class MyWebSocket {
     @OnOpen
     public void onOpen(Session session, @PathParam("sid") String sid) {
         this.session = session;
-        String usernameFromToken = JwtTokenUtil.getUsernameFromToken(sid);
-        webSocketSet.put(usernameFromToken, this);     //加入set中
+        String uid = JwtTokenUtil.getUsernameFromToken(sid);
+        webSocketSet.put(uid, this);     //加入set中
         addOnlineCount();           //在线数加1
-        this.sid = usernameFromToken;
+        this.sid = uid;
         try {
             sendMessage("连接成功");
         } catch (IOException e) {

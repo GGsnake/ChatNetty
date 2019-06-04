@@ -15,7 +15,6 @@
  */
 package com.webscoket.webscoket.utils;
 
-import com.webscoket.webscoket.config.JwtConstants;
 import io.jsonwebtoken.*;
 
 import java.util.Date;

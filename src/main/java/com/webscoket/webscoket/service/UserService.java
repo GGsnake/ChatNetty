@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class UserService {
+public class UserService  {
     @Autowired
     private UserDao userDao;
 
@@ -21,10 +21,15 @@ public class UserService {
 
 
     public User getUser(User user) {
-        if (user.getName()==null){
+        if (user.getPhone()==null){
             return null;
         }
-        User bean = user.selectOne(new EntityWrapper<User>().eq("name", user.getName()));
+        User bean=null;
+        try {
+            bean = user.selectOne(new EntityWrapper<User>().eq("phone", user.getPhone()));
+        } catch (Exception e) {
+
+        }
         return bean;
     }
 

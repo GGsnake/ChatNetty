@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.webscoket.webscoket.config;
+package com.webscoket.webscoket.utils;
 
 /**
  * jwt相关配置

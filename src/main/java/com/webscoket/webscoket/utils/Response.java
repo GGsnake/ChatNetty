@@ -2,11 +2,11 @@ package com.webscoket.webscoket.utils;
 
 /**
  * 标准返回
- * @author 80132724
+ * @author liujupeng
  *
  * @param <T>
  */
-public class WeikeResponse<T> {
+public class Response<T> {
 	private boolean success;
 	private ResponseCode error;
 	private T data;

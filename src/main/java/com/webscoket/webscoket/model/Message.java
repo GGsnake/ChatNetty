@@ -5,6 +5,8 @@ import java.io.Serializable;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
+
+import java.sql.Timestamp;
 import java.util.Date;
 /**
  *  message
@@ -36,12 +38,12 @@ public class Message extends Model<Message> implements Serializable {
     /**
      * sendtime
      */
-    private Date sendtime;
+    private Timestamp sendtime;
 
     /**
      * status
      */
-    private Date status;
+    private Integer status;
 
 
     @Override
