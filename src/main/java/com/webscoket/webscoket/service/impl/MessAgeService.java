@@ -1,4 +1,4 @@
-package com.webscoket.webscoket.service;
+package com.webscoket.webscoket.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.webscoket.webscoket.dao.MessageDao;

@@ -2,10 +2,13 @@ package com.webscoket.webscoket.controller;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.google.common.collect.Maps;
+import com.webscoket.webscoket.bean.ChatUser;
+import com.webscoket.webscoket.bean.dto.ChatUserDTO;
 import com.webscoket.webscoket.bean.dto.UserDto;
 import com.webscoket.webscoket.service.UserService;
+import com.webscoket.webscoket.service.impl.UserServiceImpl;
 import com.webscoket.webscoket.dao.UserBindDao;
 import com.webscoket.webscoket.model.User;
 import com.webscoket.webscoket.utils.*;
@@ -14,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,53 +32,38 @@ public class UserController {
 
     @Autowired
     private UserBindDao userBindDao;
+
     /**
      * 登录
-     * @param json
+     *
+     * @param chatUserDTO
      * @return
      */
     @PostMapping("/login")
-    public Response login(@RequestBody String json) {
-        UserDto userDto = JSON.parseObject(json,UserDto.class);
-        User user = new User();
-        BeanUtils.copyProperties(userDto, user);
-        User vaildBean = userService.getUser(user);
-        if (vaildBean == null) {
-            return ResponseUtil.fail(ResponseCode.COMMON_USER_NOEXIST);
+    public Response login(@Valid @RequestBody ChatUserDTO chatUserDTO) {
+
+        try {
+            ChatUser chatUser = userService.userLogin(chatUserDTO);
+            String token = JwtTokenUtil.generateToken(String.valueOf(chatUserDTO.getId()));
+            HashMap<String, Object> data = Maps.newHashMap();
+            data.put("token", token);
+            data.put("user", chatUser);
+            return ResponseUtil.success(data);
+        } catch (Exception e) {
+            return ResponseUtil.fail("错误信息", e.getMessage());
         }
-        boolean equals = vaildBean.getPassword().equals(ToolUtil.enpPassword(userDto.getPassword()));
-        if (!equals) {
-            return ResponseUtil.fail(ResponseCode.COMMON_PASSWORD_ERROR);
-        }
-        String token = JwtTokenUtil.generateToken(String.valueOf(vaildBean.getId()));
-        HashMap<String, Object> map = Maps.newHashMap();
-        map.put("token",token);
-        map.put("user",vaildBean);
-        return ResponseUtil.success(map);
+
     }
 
     /**
      * 注册用户
      *
-     * @param userDto
+     * @param chatUserDTO
      * @return
      */
     @PostMapping("/register")
-    public Response register(UserDto userDto) {
-        if (userDto.ifPwdNull() || userDto.ifPhoneNull()) {
-            return ResponseUtil.fail(ResponseCode.COMMON_PARAMS_MISSING);
-        }
-        User user = new User();
-        BeanUtils.copyProperties(userDto, user);
-        User vaildBean = userService.getUser(user);
-        if (vaildBean != null) {
-            return ResponseUtil.fail(ResponseCode.COMMON_USER_EXIST);
-        }
-        String password = userDto.getPassword();
-        // MD5加密加盐
-        String passwordEncode = ToolUtil.enpPassword(password);
-        user.setPassword(passwordEncode);
-        userService.addUser(user);
+    public Response register(ChatUserDTO chatUserDTO) {
+
         return ResponseUtil.success();
     }
 

@@ -15,7 +15,7 @@
  */
 package com.webscoket.webscoket.interceptor;
 
-import com.webscoket.webscoket.config.JwtConstants;
+import com.webscoket.webscoket.utils.JwtConstants;
 import com.webscoket.webscoket.utils.JwtTokenUtil;
 import io.jsonwebtoken.JwtException;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

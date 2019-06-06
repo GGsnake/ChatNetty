@@ -1,21 +1,20 @@
 package com.webscoket.webscoket.bean.dto;
 
-import com.alibaba.druid.util.StringUtils;
-import com.webscoket.webscoket.model.User;
+import lombok.Data;
 
-public class UserDto extends User {
-    public Boolean ifPwdNull() {
-        if (StringUtils.isEmpty(getPassword())) {
-            return true;
+import java.util.Date;
 
-        }
+@Data
+public class UserDto {
+    private Integer id;
+    //年龄
+    private Integer age;
+    //
+    private String name;
+    //用户名称
+    private String userName;
+    private Date createDate;
+    private Date lastTime;
+    private String signature;
 
-        return false;
-    }
-    public Boolean ifPhoneNull() {
-        if (StringUtils.isEmpty(getPhone())) {
-            return true;
-        }
-        return false;
-    }
 }

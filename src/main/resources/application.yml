@@ -9,7 +9,7 @@ spring:
     url: jdbc:mysql://47.100.187.103:3306/oop?useUnicode=true&characterEncoding=utf8&useSSL=false&tinyInt1isBit=true
     username: root
     #    username: root
-    password: gg5201314
+    password:
   #    password: root
 #mybatisPlus
 mybatis:
