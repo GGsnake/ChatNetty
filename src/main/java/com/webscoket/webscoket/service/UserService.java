@@ -12,7 +12,7 @@ public interface UserService extends IService<ChatUser> {
      */
     ChatUser userLogin(ChatUserDTO chatUserDTO) throws Exception;
     /**
-     * 用户登录
+     * 用户注册
      * @param chatUserDTO
      * @return
      */

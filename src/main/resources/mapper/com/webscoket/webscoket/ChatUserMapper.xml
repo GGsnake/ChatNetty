@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webscoket.webscoket.dao.ChatUserMapper">
+  <resultMap id="BaseResultMap" type="com.webscoket.webscoket.bean.ChatUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_age" jdbcType="TINYINT" property="userAge" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="last_date" jdbcType="TIMESTAMP" property="lastDate" />
+    <result column="wxOpenId" jdbcType="VARCHAR" property="wxopenid" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, user_phone, user_name, user_age, user_password, signature, last_date, wxOpenId, 
+    create_date
+  </sql>
+</mapper>

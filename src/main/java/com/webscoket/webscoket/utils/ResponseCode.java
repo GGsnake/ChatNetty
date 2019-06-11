@@ -18,6 +18,7 @@ public class ResponseCode {
     public static final ResponseCode COMMON_USER_NOEXIST = new ResponseCode("100003", "用户不存在");
     public static final ResponseCode COMMON_PASSWORD_ERROR = new ResponseCode("100004", "密码错误");
     public static final ResponseCode SEND_MESSAGE_FAIL = new ResponseCode("100005", "消息发送失败 请重试");
+    public static final ResponseCode CHAT_ADD_FAIL = new ResponseCode("100005", "日志添加失败 请重试");
 
 
 

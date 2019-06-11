@@ -5,6 +5,7 @@ import com.webscoket.webscoket.dao.MessageDao;
 import com.webscoket.webscoket.bean.dto.MessageDto;
 import com.webscoket.webscoket.model.Message;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,13 @@ public class MessAgeService extends ServiceImpl<MessageDao,Message> {
      */
     public Boolean allMessage(MessageDto messageDto) {
         Message message=new Message();
-        BeanUtils.copyProperties(messageDto,message);
-        int flag = sqlManager.insert(message);
+        int flag = 0;
+        try {
+            BeanUtils.copyProperties(messageDto,message);
+            flag = sqlManager.insert(message);
+        } catch (BeansException e) {
+            throw new RuntimeException("ss");
+        }
         return flag==0?false:true;
     }
 

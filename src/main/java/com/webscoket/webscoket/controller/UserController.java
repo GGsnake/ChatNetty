@@ -63,7 +63,7 @@ public class UserController {
      */
     @PostMapping("/register")
     public Response register(ChatUserDTO chatUserDTO) {
-
+        userService.userRegsiter(chatUserDTO);
         return ResponseUtil.success();
     }
 

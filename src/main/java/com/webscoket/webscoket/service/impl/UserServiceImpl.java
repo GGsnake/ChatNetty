@@ -4,19 +4,14 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.webscoket.webscoket.bean.ChatUser;
 import com.webscoket.webscoket.bean.dto.ChatUserDTO;
-import com.webscoket.webscoket.bean.dto.UserDto;
 import com.webscoket.webscoket.dao.ChatUserMapper;
 import com.webscoket.webscoket.dao.UserBindDao;
-import com.webscoket.webscoket.dao.UserDao;
 import com.webscoket.webscoket.model.User;
-import com.webscoket.webscoket.model.UserBind;
 import com.webscoket.webscoket.service.UserService;
 import com.webscoket.webscoket.utils.ToolUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<ChatUserMapper, ChatUser> implements UserService {
@@ -59,7 +54,8 @@ public class UserServiceImpl extends ServiceImpl<ChatUserMapper, ChatUser> imple
 //    }
 //
     @Override
-    public ChatUser userLogin(ChatUserDTO chatUserDTO) throws Exception {
+    public ChatUser userLogin(ChatUserDTO chatUserDTO) {
+        Throwable throwable = null;
         try {
             EntityWrapper wrapper = new EntityWrapper();
             wrapper.eq("user_phone", chatUserDTO.getUserPhone());
@@ -74,12 +70,12 @@ public class UserServiceImpl extends ServiceImpl<ChatUserMapper, ChatUser> imple
             }
             return chatUser;
         } catch (Exception e) {
-            throw new Exception("登录失败请重试");
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     @Override
-    public Boolean userRegsiter(ChatUserDTO chatUserDTO) throws Exception {
+    public Boolean userRegsiter(ChatUserDTO chatUserDTO) {
         User user = new User();
         BeanUtils.copyProperties(chatUserDTO, user);
 //        User vaildBean = chatUserDTO.getUser(user);
