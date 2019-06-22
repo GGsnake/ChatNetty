@@ -1,7 +1,9 @@
-package com.webscoket.webscoket.service;
+package com.webscoket.webscoket.service.impl;
 
 import com.webscoket.webscoket.dao.UserDao;
+import com.webscoket.webscoket.entity.ChatUser;
 import com.webscoket.webscoket.model.User;
+import com.webscoket.webscoket.service.UserService;
 import com.webscoket.webscoket.utils.JwtTokenUtil;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 @Log
 @ServerEndpoint("/websocket/{sid}")
@@ -29,7 +30,7 @@ public class MyWebSocket {
     //接收sid
     private String sid = "";
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     /**
      * 连接建立成功调用的方法
@@ -54,10 +55,10 @@ public class MyWebSocket {
     public void onClose() {
         webSocketSet.remove(this);  //从set中删除
         subOnlineCount();           //在线数减1
-        User bean = new User();
+        ChatUser bean = new ChatUser();
         bean.setId(Integer.valueOf(this.sid));
-        bean.setLastTime(new Date());
-        userDao.updateById(bean);
+        bean.setLastDate(new Date());
+        userService.updateById(bean);
         log.info("有一连接关闭！当前在线人数为" + getOnlineCount());
     }
 

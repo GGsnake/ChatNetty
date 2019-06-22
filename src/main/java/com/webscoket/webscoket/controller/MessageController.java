@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.webscoket.webscoket.bean.dto.MessageDto;
 import com.webscoket.webscoket.model.Message;
 import com.webscoket.webscoket.service.impl.MessAgeService;
-import com.webscoket.webscoket.service.MyWebSocket;
+import com.webscoket.webscoket.service.impl.MyWebSocket;
 import com.webscoket.webscoket.utils.*;
 import lombok.extern.java.Log;
 import org.springframework.beans.BeanUtils;

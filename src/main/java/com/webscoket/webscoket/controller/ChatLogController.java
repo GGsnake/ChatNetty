@@ -44,48 +44,29 @@ public class ChatLogController {
 
     }
 
-    /**
-     * [刪除]
-     *
-     * @author Snake
-     * @date 2019/06/11
-     **/
-    @RequestMapping("/delete")
-    public Response delete(int id) {
-        return chatLogService.delete(id);
-    }
 
-    /**
-     * [更新]
-     *
-     * @author Snake
-     * @date 2019/06/11
-     **/
-    @RequestMapping("/update")
-    public Response<String> update(ChatLog chatLog) {
-        return chatLogService.update(chatLog);
-    }
 
-    /**
-     * [查詢] 根據主鍵 id 查詢
-     *
-     * @author Snake
-     * @date 2019/06/11
-     **/
-    @RequestMapping("/load")
-    public Response<String> load(int id) {
-        return chatLogService.load(id);
-    }
+//    /**
+//     * [更新]
+//     *
+//     * @author Snake
+//     * @date 2019/06/11
+//     **/
+//    @RequestMapping("/update")
+//    public Response<String> update(ChatLog chatLog) {
+//        return chatLogService.update(chatLog);
+//    }
 
-    /**
-     * [查詢] 分頁查詢
-     *
-     * @author Snake
-     * @date 2019/06/11
-     **/
-    @RequestMapping("/pageList")
-    public Response pageList(@RequestParam(required = false, defaultValue = "0") int offset,
-                                        @RequestParam(required = false, defaultValue = "10") int pagesize) {
-        return chatLogService.selectPage(offset, pagesize);
-    }
+//
+//    /**
+//     * [查詢] 分頁查詢
+//     *
+//     * @author Snake
+//     * @date 2019/06/11
+//     **/
+//    @RequestMapping("/pageList")
+//    public Response pageList(@RequestParam(required = false, defaultValue = "0") int offset,
+//                                        @RequestParam(required = false, defaultValue = "10") int pagesize) {
+//        return chatLogService.selectPage(offset, pagesize);
+//    }
 }

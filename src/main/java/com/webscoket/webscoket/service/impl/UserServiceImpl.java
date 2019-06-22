@@ -2,28 +2,21 @@ package com.webscoket.webscoket.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.webscoket.webscoket.bean.ChatUser;
 import com.webscoket.webscoket.bean.dto.ChatUserDTO;
-import com.webscoket.webscoket.dao.ChatUserMapper;
 import com.webscoket.webscoket.dao.UserBindDao;
+import com.webscoket.webscoket.dao.UserDao;
+import com.webscoket.webscoket.entity.ChatUser;
 import com.webscoket.webscoket.model.User;
 import com.webscoket.webscoket.service.UserService;
 import com.webscoket.webscoket.utils.ToolUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<ChatUserMapper, ChatUser> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserDao, ChatUser> implements UserService {
 
-    @Autowired
-    private UserBindDao userBindDao;
-
-
-//
-//    public void addUser(User user) {
-//        userDao.insert(user);
-//    }
 
     //    /**
 //     * 关联好友关系
@@ -75,18 +68,27 @@ public class UserServiceImpl extends ServiceImpl<ChatUserMapper, ChatUser> imple
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean userRegsiter(ChatUserDTO chatUserDTO) {
-        User user = new User();
-        BeanUtils.copyProperties(chatUserDTO, user);
-//        User vaildBean = chatUserDTO.getUser(user);
-//        if (vaildBean != null) {
-//            return ResponseUtil.fail(ResponseCode.COMMON_USER_EXIST);
-//        }
-//        String password = userDto.getPassword();
-//        // MD5加密加盐
-//        String passwordEncode = ToolUtil.enpPassword(password);
-//        user.setPassword(passwordEncode);
-//        userService.addUser(user);
-        return null;
+        //检查是否注册过手机号
+        EntityWrapper wrapper = new EntityWrapper();
+        wrapper.eq("user_phone", chatUserDTO.getUserPhone());
+        ChatUser chatUser = selectOne(wrapper);
+        if (chatUser != null) {
+            return false;
+        }
+        chatUser = new ChatUser();
+
+        BeanUtils.copyProperties(chatUserDTO, chatUser);
+        String password = chatUserDTO.getUserPassword();
+        // MD5加密加盐
+        String passwordEncode = ToolUtil.enpPassword(password);
+        chatUser.setUserPassword(passwordEncode);
+
+        Boolean insert = insert(chatUser);
+        if (insert == null) {
+            return false;
+        }
+        return insert;
     }
 }
