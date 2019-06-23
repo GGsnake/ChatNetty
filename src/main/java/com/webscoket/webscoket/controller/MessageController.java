@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.webscoket.webscoket.bean.dto.MessageDto;
 import com.webscoket.webscoket.model.Message;
-import com.webscoket.webscoket.service.impl.MessAgeService;
-import com.webscoket.webscoket.service.impl.MyWebSocket;
+import com.webscoket.webscoket.service.MessAgeService;
 import com.webscoket.webscoket.utils.*;
 import lombok.extern.java.Log;
 import org.springframework.beans.BeanUtils;
@@ -83,15 +82,10 @@ public class MessageController {
     public Response save(MessageDto messageDto, String token) {
         Integer myId = Integer.valueOf(JwtTokenUtil.getUsernameFromToken(token));
         messageDto.setSid(myId);
-        Message message = new Message();
         try {
-            BeanUtils.copyProperties(messageDto, message);
-            messAgeService.insert(messageDto);
+            messAgeService.sendMessage(messageDto);
             //发送给对方
-            MyWebSocket.sendForUser(JSON.toJSONString(messageDto), messageDto.getAccid());
             return ResponseUtil.success();
-        } catch (IOException e) {
-            return ResponseUtil.fail(ResponseCode.WEBSOCKET_CONNECT_ERROR);
         } catch (BeansException e) {
             return ResponseUtil.fail(ResponseCode.COMMON_SYSTEM_ERROR);
         } catch (Exception e) {
